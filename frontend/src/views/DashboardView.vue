@@ -1,4 +1,4 @@
-<!-- frotend/src/views/DashboardView.vue -->
+<!-- frontend/src/views/DashboardView.vue -->
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'

@@ -1,4 +1,4 @@
-<!-- frotend/src/views/RegisterView.vue -->
+<!-- frontend/src/views/RegisterView.vue -->
 <script setup>
 import { ref } from 'vue'
 import { useRouter, RouterLink } from 'vue-router'
