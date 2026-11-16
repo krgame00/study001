@@ -16,7 +16,7 @@ const route = useRoute()
 async function handleLogin() {
   errorMessage.value = ''
   if (!username.value.trim() || !password.value) {
-    errorMessage.value = 'กรุณากรอกชื่อผู้ใช้และรหัสผ่านให้ครบถ้วน'
+    errorMessage.value = 'กรุณากรอกชื่อผู้ใช้และรหัสผ่าน'
     return
   }
 
@@ -35,28 +35,20 @@ async function handleLogin() {
 <template>
   <div class="auth-box">
     <div class="card">
-      <h2 style="text-align: center; margin-top: 0; margin-bottom: 20px">เข้าสู่ระบบ</h2>
+      <h2 style="text-align: center; margin-top: 0">เข้าสู่ระบบ</h2>
       <form @submit.prevent="handleLogin">
-        <label for="username">ชื่อผู้ใช้ (Username)</label>
-        <input
-          id="username"
-          v-model="username"
-          class="input"
-          type="text"
-          placeholder="กรอกชื่อผู้ใช้"
-          required
-        />
+        <label>ชื่อผู้ใช้ (Username)</label>
+        <input id="username" v-model="username" class="input" type="text" placeholder="กรอกชื่อผู้ใช้" />
 
-        <label for="password">รหัสผ่าน (Password)</label>
-        <div class="row" style="margin-bottom: 14px; gap: 8px">
+        <label>รหัสผ่าน (Password)</label>
+        <div class="row" style="margin-bottom: 10px">
           <input
             id="password"
             v-model="password"
             class="input"
-            style="flex: 1; margin-bottom: 0"
             :type="showPassword ? 'text' : 'password'"
             placeholder="กรอกรหัสผ่าน"
-            required
+            style="flex: 1; margin-bottom: 0"
           />
           <button type="button" class="btn btn-gray" @click="showPassword = !showPassword">
             {{ showPassword ? 'ซ่อน' : 'แสดง' }}
@@ -64,14 +56,12 @@ async function handleLogin() {
         </div>
 
         <div v-if="errorMessage" class="alert">{{ errorMessage }}</div>
-
-        <button type="submit" class="btn" style="width: 100%; margin-top: 4px" :disabled="isLoading">
+        <button type="submit" class="btn" style="width: 100%" :disabled="isLoading">
           {{ isLoading ? 'กำลังตรวจสอบ...' : 'เข้าสู่ระบบ (Login)' }}
         </button>
       </form>
-
-      <p style="text-align: center; margin-top: 20px; font-size: 14px; color: #64748b">
-        ยังไม่มีบัญชีผู้ใช้? <RouterLink :to="{ name: 'Register' }">สมัครสมาชิก</RouterLink>
+      <p style="text-align: center; margin-bottom: 0">
+        ยังไม่มีบัญชี? <RouterLink :to="{ name: 'Register' }">สมัครสมาชิกที่นี่</RouterLink>
       </p>
     </div>
   </div>
