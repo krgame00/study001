@@ -8,7 +8,8 @@
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "build-only": "vite build",
-    "type-check": "vue-tsc --build"
+    "type-check": "vue-tsc --build",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@vue/devtools-api": "^8.2.1",
@@ -17,6 +18,7 @@
     "vue-router": "^5.5.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.65.1",
     "@tsconfig/node24": "^24.0.5",
     "@types/node": "^24.13.4",
     "@vitejs/plugin-vue": "^6.0.8",
