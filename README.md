@@ -38,6 +38,7 @@ project-root/
 │   │   │   ├── LoginView.vue    # หน้า Login
 │   │   │   ├── RegisterView.vue # หน้า Register (เลือก Role)
 │   │   │   └── DashboardView.vue# หน้าจัดการข้อมูล (CRUD + Upload + Filter + Pagination)
+│   │   ├── api.js               # Helper เรียก Backend API + แนบ Token อัตโนมัติ
 │   │   ├── App.vue
 │   │   └── main.js
 │   ├── tests/

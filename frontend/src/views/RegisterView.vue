@@ -3,10 +3,7 @@ import { ref } from 'vue'
 import { useRouter, RouterLink } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 
-const username = ref('')
-const password = ref('')
-const confirmPassword = ref('')
-const role = ref('user1')
+const form = ref({ username: '', password: '', confirm: '', role: 'user1' })
 const errorMessage = ref('')
 const isLoading = ref(false)
 
@@ -15,22 +12,14 @@ const router = useRouter()
 
 async function handleRegister() {
   errorMessage.value = ''
-  if (username.value.trim().length < 3) {
-    errorMessage.value = 'ชื่อผู้ใช้ต้องมีอย่างน้อย 3 ตัวอักษร'
-    return
-  }
-  if (password.value.length < 4) {
-    errorMessage.value = 'รหัสผ่านต้องมีอย่างน้อย 4 ตัวอักษร'
-    return
-  }
-  if (password.value !== confirmPassword.value) {
-    errorMessage.value = 'รหัสผ่านและยืนยันรหัสผ่านไม่ตรงกัน'
-    return
-  }
+  const { username, password, confirm, role } = form.value
+  if (username.trim().length < 3) return (errorMessage.value = 'ชื่อผู้ใช้ต้องมีอย่างน้อย 3 ตัวอักษร')
+  if (password.length < 4) return (errorMessage.value = 'รหัสผ่านต้องมีอย่างน้อย 4 ตัวอักษร')
+  if (password !== confirm) return (errorMessage.value = 'รหัสผ่านและยืนยันรหัสผ่านไม่ตรงกัน')
 
   isLoading.value = true
   try {
-    await authStore.register(username.value.trim(), password.value, role.value)
+    await authStore.register(username.trim(), password, role)
     alert('สมัครสมาชิกสำเร็จ กรุณาเข้าสู่ระบบ')
     router.push({ name: 'Login' })
   } catch (err) {
@@ -44,53 +33,30 @@ async function handleRegister() {
 <template>
   <div class="auth-box">
     <div class="card">
-      <h2 style="text-align: center; margin-top: 0; margin-bottom: 20px">สมัครสมาชิก</h2>
+      <h2 style="text-align: center; margin-top: 0">สมัครสมาชิก</h2>
       <form @submit.prevent="handleRegister">
-        <label for="reg-username">ชื่อผู้ใช้ (Username)</label>
-        <input
-          id="reg-username"
-          v-model="username"
-          class="input"
-          type="text"
-          placeholder="อย่างน้อย 3 ตัวอักษร"
-          required
-        />
+        <label>ชื่อผู้ใช้ (Username)</label>
+        <input v-model="form.username" class="input" type="text" placeholder="อย่างน้อย 3 ตัวอักษร" required />
 
-        <label for="reg-password">รหัสผ่าน (Password)</label>
-        <input
-          id="reg-password"
-          v-model="password"
-          class="input"
-          type="password"
-          placeholder="อย่างน้อย 4 ตัวอักษร"
-          required
-        />
+        <label>รหัสผ่าน (Password)</label>
+        <input v-model="form.password" class="input" type="password" placeholder="อย่างน้อย 4 ตัวอักษร" required />
 
-        <label for="reg-confirm">ยืนยันรหัสผ่าน</label>
-        <input
-          id="reg-confirm"
-          v-model="confirmPassword"
-          class="input"
-          type="password"
-          placeholder="กรอกรหัสผ่านอีกครั้ง"
-          required
-        />
+        <label>ยืนยันรหัสผ่าน</label>
+        <input v-model="form.confirm" class="input" type="password" placeholder="กรอกรหัสผ่านอีกครั้ง" required />
 
-        <label for="reg-role">ระดับผู้ใช้งาน (Role)</label>
-        <select id="reg-role" v-model="role" class="input">
+        <label>ระดับผู้ใช้งาน (Role)</label>
+        <select v-model="form.role" class="input">
           <option value="user1">ผู้ใช้งานระดับ 1 (User 1)</option>
           <option value="user2">ผู้ใช้งานระดับ 2 (User 2)</option>
           <option value="admin">ผู้ดูแลระบบ (Admin)</option>
         </select>
 
         <div v-if="errorMessage" class="alert">{{ errorMessage }}</div>
-
-        <button type="submit" class="btn" style="width: 100%; margin-top: 4px" :disabled="isLoading">
-          {{ isLoading ? 'กำลังบันทึกข้อมูล...' : 'สมัครสมาชิก' }}
+        <button type="submit" class="btn" style="width: 100%" :disabled="isLoading">
+          {{ isLoading ? 'กำลังบันทึก...' : 'สมัครสมาชิก' }}
         </button>
       </form>
-
-      <p style="text-align: center; margin-top: 20px; font-size: 14px; color: #64748b">
+      <p style="text-align: center; margin-bottom: 0">
         มีบัญชีอยู่แล้ว? <RouterLink :to="{ name: 'Login' }">เข้าสู่ระบบ</RouterLink>
       </p>
     </div>

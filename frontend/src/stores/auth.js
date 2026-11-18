@@ -1,6 +1,6 @@
-// frontend/src/stores/auth.js
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
+import { api } from '../api'
 
 export const useAuthStore = defineStore('auth', () => {
   const token = ref(localStorage.getItem('token') || '')
@@ -10,36 +10,15 @@ export const useAuthStore = defineStore('auth', () => {
   const userRole = computed(() => user.value?.role || 'user1')
 
   async function login(username, password) {
-    const response = await fetch('http://localhost:3000/api/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password })
-    })
-
-    const result = await response.json()
-    if (!response.ok) {
-      throw new Error(result.message || 'เข้าสู่ระบบไม่สำเร็จ')
-    }
-
-    token.value = result.data.token
-    user.value = result.data.user
-    localStorage.setItem('token', result.data.token)
-    localStorage.setItem('user', JSON.stringify(result.data.user))
+    const res = await api('/login', { method: 'POST', body: { username, password } })
+    token.value = res.data.token
+    user.value = res.data.user
+    localStorage.setItem('token', res.data.token)
+    localStorage.setItem('user', JSON.stringify(res.data.user))
   }
 
-  async function register(username, password, role = 'user1') {
-    const response = await fetch('http://localhost:3000/api/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password, role })
-    })
-
-    const result = await response.json()
-    if (!response.ok) {
-      throw new Error(result.message || 'สมัครสมาชิกไม่สำเร็จ')
-    }
-
-    return result
+  function register(username, password, role = 'user1') {
+    return api('/register', { method: 'POST', body: { username, password, role } })
   }
 
   function logout() {

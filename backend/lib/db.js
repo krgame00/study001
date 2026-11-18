@@ -1,19 +1,10 @@
-// backend/lib/db.js
-const mysql = require('mysql2');
+const mysql = require('mysql2/promise');
 
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  database: 'node-jwt',
-  password: '1234'
+const db = mysql.createPool({
+  host: process.env.DB_HOST || 'localhost',
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || '1234',
+  database: process.env.DB_NAME || 'node-jwt'
 });
 
-connection.connect((err) => {
-  if (err) {
-    console.error('เชื่อมต่อฐานข้อมูล MySQL ไม่สำเร็จ:', err);
-    return;
-  }
-  console.log('เชื่อมต่อฐานข้อมูล MySQL สำเร็จ!');
-});
-
-module.exports = connection;
+module.exports = db;
