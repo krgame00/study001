@@ -1,25 +1,185 @@
-* { box-sizing: border-box; font-family: sans-serif; }
-body { margin: 0; background: #f4f6f8; color: #222; }
-.container { max-width: 960px; margin: 20px auto; padding: 0 12px; }
-.auth-box { max-width: 380px; margin: 60px auto; padding: 0 12px; }
-.card { background: #fff; padding: 18px; border-radius: 8px; border: 1px solid #ddd; margin-bottom: 14px; }
+* {
+  box-sizing: border-box;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans Thai', sans-serif;
+}
 
-.row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-.between { justify-content: space-between; }
-@media (max-width: 640px) { .row { flex-direction: column; align-items: stretch; } }
+body {
+  margin: 0;
+  background: #f1f5f9;
+  color: #1e293b;
+  min-height: 100vh;
+  line-height: 1.5;
+}
 
-.input { width: 100%; padding: 8px 10px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 10px; }
-.btn { padding: 8px 14px; border: none; border-radius: 5px; background: #0d6efd; color: #fff; cursor: pointer; }
-.btn:disabled { opacity: 0.5; cursor: not-allowed; }
-.btn-red { background: #dc3545; }
-.btn-green { background: #198754; }
-.btn-gray { background: #6c757d; }
+/* ปรับความกว้างของหน้าจอให้เต็มตาและพอดีกับจอยุคใหม่ (1200px - 1280px) */
+.container {
+  max-width: 1200px;
+  width: 92%;
+  margin: 32px auto;
+  padding: 0;
+}
 
-.alert { padding: 10px; border-radius: 5px; background: #f8d7da; color: #842029; margin-bottom: 12px; }
-.alert-ok { background: #d1e7dd; color: #0f5132; }
-.badge { padding: 2px 8px; border-radius: 12px; font-size: 12px; font-weight: bold; background: #dbeafe; color: #1d4ed8; }
+.auth-box {
+  max-width: 420px;
+  width: 92%;
+  margin: 60px auto;
+  padding: 0;
+}
 
-.table-wrap { width: 100%; overflow-x: auto; }
-table { width: 100%; border-collapse: collapse; }
-th, td { padding: 9px; border-bottom: 1px solid #e5e7eb; text-align: left; }
-th { background: #f8f9fa; }
+.card {
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+  margin-bottom: 20px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.between {
+  justify-content: space-between;
+}
+
+@media (max-width: 640px) {
+  .row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #0f172a;
+  background-color: #ffffff;
+  margin-bottom: 12px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #0d6efd;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+}
+
+.btn:hover:not(:disabled) {
+  background-color: #0b5ed7;
+  transform: translateY(-1px);
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn-red {
+  background-color: #dc3545;
+}
+.btn-red:hover:not(:disabled) {
+  background-color: #bb2d3b;
+}
+
+.btn-green {
+  background-color: #198754;
+}
+.btn-green:hover:not(:disabled) {
+  background-color: #157347;
+}
+
+.btn-gray {
+  background-color: #6c757d;
+}
+.btn-gray:hover:not(:disabled) {
+  background-color: #5c636a;
+}
+
+.alert {
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 16px;
+  border: 1px solid #f8d7da;
+  background-color: #f8d7da;
+  color: #842029;
+}
+
+.alert-ok {
+  border-color: #d1e7dd;
+  background-color: #d1e7dd;
+  color: #0f5132;
+}
+
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 700;
+  background-color: #dbeafe;
+  color: #1d4ed8;
+}
+
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  margin-top: 14px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+}
+
+th, td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #e2e8f0;
+  text-align: left;
+  font-size: 14px;
+}
+
+th {
+  background-color: #f8fafc;
+  font-weight: 600;
+  color: #475569;
+}
+
+tr:hover td {
+  background-color: #f8fafc;
+}
+
+a {
+  color: #0d6efd;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+a:hover {
+  text-decoration: underline;
+}
