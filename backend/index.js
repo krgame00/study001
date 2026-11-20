@@ -29,7 +29,7 @@ app.use((req, res) => {
 });
 
 // เปิดพอร์ตเฉพาะเมื่อรันโดยตรง (ไม่เปิดซ้ำตอนรัน Test)
-if (require.main === module) {
+if (require.main === module || require.main?.filename?.endsWith('server.js')) {
   app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
   });
