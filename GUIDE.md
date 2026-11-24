@@ -74,39 +74,60 @@ project-root/
 
 #### ขั้นที่ 2: สร้างตารางที่ 1 หมวดหมู่ (`categories`)
 1. ดับเบิลคลิกเปิดฐานข้อมูล `node-jwt` > คลิกขวาที่โฟลเดอร์ **Tables** > เลือก **Create New Table**.
-2. ช่อง Table Name ด้านบนพิมพ์ชื่อ: `categories`.
-3. คลิกขวาในตารางว่างของแท็บ Columns > เลือก **Create New Column** เพิ่ม 3 คอลัมน์:
-   - `id`: Type เลือก `INT`, ติ๊กช่อง **Auto Increment**.
-   - `name`: Type เลือก `VARCHAR`, Length ใส่ `100`, ติ๊ก **Not Null**.
-   - `description`: Type เลือก `TEXT`.
-4. คลิกแท็บ **Constraints** ด้านบน > คลิกขวาเลือก **Create New Constraint** > เลือก Type เป็น `Primary Key` และติ๊กเลือกคอลัมน์ `id`.
-5. กดปุ่ม **Save (Ctrl + S)** ด้านล่างขวา > กดปุ่ม **Persist**.
+2. ในช่อง **Table Name** ด้านบนพิมพ์ชื่อ: `categories`.
+3. สร้างคอลัมน์ทีละตัว โดยคลิกขวาในพื้นที่ว่างของแท็บ Columns > เลือก **Create New Column** (จะมีหน้าต่างป๊อปอัปเด้งขึ้นมา):
+   - **คอลัมน์ที่ 1 (`id`)**:
+     - ช่อง **Column name**: พิมพ์ `id`
+     - ช่อง **Data type**: พิมพ์หรือเลือก `INT`
+     - ช่อง **Not Null**: ติ๊กเครื่องหมายถูก
+     - ช่อง **Auto Increment**: ติ๊กเครื่องหมายถูก
+     - กดปุ่ม **OK**
+   - **คอลัมน์ที่ 2 (`name`)**:
+     - คลิกขวาเลือก **Create New Column** อีกครั้ง
+     - ช่อง **Column name**: พิมพ์ `name`
+     - ช่อง **Data type**: พิมพ์หรือเลือก `VARCHAR`
+     - ช่อง **Length**: พิมพ์ `100`
+     - ช่อง **Not Null**: ติ๊กเครื่องหมายถูก
+     - กดปุ่ม **OK**
+   - **คอลัมน์ที่ 3 (`description`)**:
+     - คลิกขวาเลือก **Create New Column** อีกครั้ง
+     - ช่อง **Column name**: พิมพ์ `description` (สะกดด้วยตัว i)
+     - ช่อง **Data type**: พิมพ์หรือเลือก `TEXT`
+     - ช่อง **Length**: ปล่อยว่างไม่ต้องใส่
+     - ช่อง **Not Null**: ไม่ต้องติ๊ก (ปล่อยให้เป็น NULL ได้)
+     - กดปุ่ม **OK**
+4. **กำหนด Primary Key**:
+   - คลิกขวาที่แถวคอลัมน์ `id` ในตาราง > เลือก **Create New Constraint**
+   - หน้าต่างจะขึ้นมา ให้เลือก Type เป็น **Primary Key** แล้วกดปุ่ม **OK**
+5. **บันทึกลงฐานข้อมูลจริง**:
+   - กดปุ่ม **Save (หรือกดคีย์ลัด Ctrl + S)** ที่มุมล่างขวาของหน้าต่าง
+   - จะมีหน้าต่าง Preview Changes แสดงโค้ด SQL เด้งขึ้นมา ให้กดปุ่ม **Persist**
 
 #### ขั้นที่ 3: สร้างตารางที่ 2 ผู้ใช้งาน (`users`)
-1. คลิกขวาที่โฟลเดอร์ **Tables** > เลือก **Create New Table** ตั้งชื่อ: `users`.
-2. เพิ่มคอลัมน์ตามโครงสร้าง:
-   - `id`: Type `VARCHAR`, Length `36`, ติ๊ก **Not Null**.
-   - `username`: Type `VARCHAR`, Length `255`, ติ๊ก **Not Null**.
-   - `password`: Type `VARCHAR`, Length `255`, ติ๊ก **Not Null**.
-   - `role`: Type `VARCHAR`, Length `20`, Default value ใส่ `'user1'`.
-   - `registered`: Type `DATETIME`, Default value ใส่ `CURRENT_TIMESTAMP`.
-   - `last_login`: Type `DATETIME`, ปล่อยว่าง NULL.
-3. คลิกแท็บ **Constraints** ด้านบน > ตั้ง `id` เป็น `Primary Key`.
-4. กดปุ่ม **Save (Ctrl + S)** > กดปุ่ม **Persist**.
+1. คลิกขวาที่โฟลเดอร์ **Tables** > เลือก **Create New Table** ตั้งชื่อ Table Name: `users`.
+2. คลิกขวาที่แท็บ Columns เลือก **Create New Column** เพิ่มทีละตัว:
+   - **`id`**: Name ใส่ `id`, Type `VARCHAR`, Length `36`, ติ๊ก **Not Null**, กด **OK**
+   - **`username`**: Name ใส่ `username`, Type `VARCHAR`, Length `255`, ติ๊ก **Not Null**, กด **OK**
+   - **`password`**: Name ใส่ `password`, Type `VARCHAR`, Length `255`, ติ๊ก **Not Null**, กด **OK**
+   - **`role`**: Name ใส่ `role`, Type `VARCHAR`, Length `20`, ติ๊ก **Not Null**, Default value ใส่ `'user1'`, กด **OK**
+   - **`registered`**: Name ใส่ `registered`, Type `DATETIME`, ติ๊ก **Not Null**, Default value ใส่ `CURRENT_TIMESTAMP`, กด **OK**
+   - **`last_login`**: Name ใส่ `last_login`, Type `DATETIME`, ไม่ต้องติ๊ก Not Null (ปล่อย NULL), กด **OK**
+3. **กำหนด Primary Key**: คลิกขวาที่คอลัมน์ `id` > เลือก **Create New Constraint** > เลือก **Primary Key** > กด **OK**
+4. กดปุ่ม **Save (Ctrl + S)** > กดปุ่ม **Persist**
 
 #### ขั้นที่ 4: สร้างตารางที่ 3 รายการงาน (`items`)
-1. คลิกขวาที่โฟลเดอร์ **Tables** > เลือก **Create New Table** ตั้งชื่อ: `items`.
-2. เพิ่มคอลัมน์ตามโครงสร้าง:
-   - `id`: Type `VARCHAR`, Length `36`, ติ๊ก **Not Null**.
-   - `user_id`: Type `VARCHAR`, Length `36`, ติ๊ก **Not Null** (เชื่อมกับผู้สร้าง).
-   - `category_id`: Type `INT` (เชื่อมกับหมวดหมู่).
-   - `title`: Type `VARCHAR`, Length `255`, ติ๊ก **Not Null** (หัวข้องาน).
-   - `description`: Type `TEXT` (รายละเอียด).
-   - `file_path`: Type `VARCHAR`, Length `255` (ที่อยู่ไฟล์แนบ).
-   - `completed`: Type `TINYINT`, Default value ใส่ `0` (สถานะงาน).
-   - `created_at`: Type `DATETIME`, Default value ใส่ `CURRENT_TIMESTAMP`.
-3. คลิกแท็บ **Constraints** ด้านบน > ตั้ง `id` เป็น `Primary Key`.
-4. กดปุ่ม **Save (Ctrl + S)** > กดปุ่ม **Persist**.
+1. คลิกขวาที่โฟลเดอร์ **Tables** > เลือก **Create New Table** ตั้งชื่อ Table Name: `items`.
+2. คลิกขวาที่แท็บ Columns เลือก **Create New Column** เพิ่มทีละตัว:
+   - **`id`**: Name ใส่ `id`, Type `VARCHAR`, Length `36`, ติ๊ก **Not Null**, กด **OK**
+   - **`user_id`**: Name ใส่ `user_id`, Type `VARCHAR`, Length `36`, ติ๊ก **Not Null**, กด **OK**
+   - **`category_id`**: Name ใส่ `category_id`, Type `INT`, ไม่ต้องติ๊ก Not Null, กด **OK**
+   - **`title`**: Name ใส่ `title`, Type `VARCHAR`, Length `255`, ติ๊ก **Not Null**, กด **OK**
+   - **`description`**: Name ใส่ `description`, Type `TEXT`, ปล่อย Length ว่าง, ไม่ต้องติ๊ก Not Null, กด **OK**
+   - **`file_path`**: Name ใส่ `file_path`, Type `VARCHAR`, Length `255`, ไม่ต้องติ๊ก Not Null, กด **OK**
+   - **`completed`**: Name ใส่ `completed`, Type `TINYINT`, Default value ใส่ `0`, กด **OK**
+   - **`created_at`**: Name ใส่ `created_at`, Type `DATETIME`, Default value ใส่ `CURRENT_TIMESTAMP`, กด **OK**
+3. **กำหนด Primary Key**: คลิกขวาที่คอลัมน์ `id` > เลือก **Create New Constraint** > เลือก **Primary Key** > กด **OK**
+4. กดปุ่ม **Save (Ctrl + S)** > กดปุ่ม **Persist**
 
 #### ขั้นที่ 5: เติมข้อมูลเริ่มต้นในตาราง categories (ไม่ต้องเขียน SQL)
 1. ดับเบิลคลิกเปิดตาราง `categories` ที่แถบซ้ายมือ.
