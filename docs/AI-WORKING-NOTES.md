@@ -36,3 +36,7 @@
   - `user1`: เจ้าหน้าที่ปฏิบัติการ (Officer / User 1)
   - `user2`: พนักงานทั่วไป (Staff / User 2)
 - **UI Updated**: `RegisterView.vue` and `DashboardView.vue` updated across both projects. Frontend builds with 0 errors.
+
+### DBeaver GUI Guide added to GUIDE.md
+- **Status**: `DOCUMENTED & VERIFIED`
+- **Details**: Added Section 1.1 with step-by-step GUI instructions in DBeaver (Create DB, create 3 tables, setup constraints, insert seed data, save & persist). Kept Section 1.2 for quick SQL script execution. Aligned `init.sql` schema.

@@ -11,28 +11,28 @@ CREATE TABLE IF NOT EXISTS `users` (
   `last_login` DATETIME NULL
 );
 
--- 2. ตารางหมวดหมู่ (สำหรับทำตัวกรอง Filter และให้ครบอย่างน้อย 3 ตาราง)
+-- 2. ตารางหมวดหมู่ (สำหรับทำตัวกรอง Filter และให้ครบ 3 ตาราง)
 CREATE TABLE IF NOT EXISTS `categories` (
-  `id` VARCHAR(36) NOT NULL PRIMARY KEY,
+  `id` INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   `name` VARCHAR(100) NOT NULL,
-  `created_at` DATETIME NOT NULL
+  `description` TEXT NULL
 );
 
-INSERT IGNORE INTO `categories` (`id`, `name`, `created_at`) VALUES
-('cat-001', 'งานทั่วไป', NOW()),
-('cat-002', 'งานด่วน', NOW()),
-('cat-003', 'เอกสารรายงาน', NOW());
+INSERT IGNORE INTO `categories` (`name`, `description`) VALUES
+('เอกสารรายงาน', 'ไฟล์เอกสารและรายงานประจำงวด'),
+('สื่อการเรียนรู้', 'เอกสารประกอบการอบรมและสไลด์'),
+('ผลงานวิชาการ', 'บทความและงานวิจัย');
 
 -- 3. ตารางรายการข้อมูล (เชื่อม Foreign Key กับ users และ categories พร้อมเก็บไฟล์แนบ)
 CREATE TABLE IF NOT EXISTS `items` (
   `id` VARCHAR(36) NOT NULL PRIMARY KEY,
   `user_id` VARCHAR(36) NOT NULL,
-  `category_id` VARCHAR(36) NULL,
+  `category_id` INT NULL,
   `title` VARCHAR(255) NOT NULL,
   `description` TEXT NULL,
   `file_path` VARCHAR(255) NULL,
   `completed` TINYINT(1) NOT NULL DEFAULT 0,
-  `created_at` DATETIME NOT NULL,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT `fk_items_user` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE,
   CONSTRAINT `fk_items_category` FOREIGN KEY (`category_id`) REFERENCES `categories`(`id`) ON DELETE SET NULL
 );

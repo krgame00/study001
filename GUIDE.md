@@ -50,9 +50,79 @@ project-root/
 
 ---
 
-## ขั้นตอนที่ 1: สร้างฐานข้อมูล MySQL 3 ตาราง (`database/init.sql`)
+## ขั้นตอนที่ 1: สร้างฐานข้อมูล MySQL 3 ตาราง (`node-jwt`)
 
-สร้างไฟล์ `database/init.sql` แล้วนำไปรันใน **MySQL Workbench** (หรือคำสั่ง `mysql -u root -p < database/init.sql`)
+สำหรับการสร้างฐานข้อมูล สามารถเลือกทำได้ 2 วิธีตามความถนัด:
+- **วิธีที่ 1.1 (แนะนำสำหรับห้องสอบ ไม่ต้องจำโค้ด)**: คลิกสร้างผ่านหน้าจอ GUI ของโปรแกรม **DBeaver** ไม่ต้องกังวลเรื่องจำไวยากรณ์ SQL.
+- **วิธีที่ 1.2 (แบบสคริปต์เร็ว 30 วินาที)**: รันผ่านคำสั่ง SQL Script ในหน้าต่าง SQL Editor ของ DBeaver.
+
+---
+
+### วิธีที่ 1.1: ใช้โปรแกรม DBeaver (คลิกสร้างผ่าน GUI ไม่ต้องจำโค้ด)
+
+#### ขั้นเตรียมตัว: เชื่อมต่อ DBeaver กับ MySQL
+1. เปิดโปรแกรม DBeaver คลิกเมนู `Database` > `New Database Connection` เลือก **MySQL**.
+2. ช่อง **Host** ใส่ `localhost`, **Port** ใส่ `3306`, **Username** ใส่ `root`.
+3. ช่อง **Password** ใส่รหัสผ่านของเครื่อง (เช่น `1234`) และติ๊ก `Save password`.
+4. *(แก้ปัญหา Public Key Retrieval)*: คลิกแท็บ **Driver properties** ด้านบน เลื่อนหา `allowPublicKeyRetrieval` เปลี่ยนเป็น **`TRUE`** และ `useSSL` เปลี่ยนเป็น **`FALSE`**.
+5. กดปุ่ม **Test Connection ...** ให้ขึ้นสีเขียวว่า `Connected` แล้วกด **Finish**.
+
+#### ขั้นที่ 1: สร้างฐานข้อมูล (Database)
+1. ที่แถบซ้ายมือ คลิกขวาที่หัวข้อ **Databases** > เลือก **Create New Database**.
+2. ตั้งชื่อ Database Name: **`node-jwt`**.
+3. เลือก Character Set: **`utf8mb4`** แล้วกด **OK**.
+
+#### ขั้นที่ 2: สร้างตารางที่ 1 หมวดหมู่ (`categories`)
+1. ดับเบิลคลิกเปิดฐานข้อมูล `node-jwt` > คลิกขวาที่โฟลเดอร์ **Tables** > เลือก **Create New Table**.
+2. ช่อง Table Name ด้านบนพิมพ์ชื่อ: `categories`.
+3. คลิกขวาในตารางว่างของแท็บ Columns > เลือก **Create New Column** เพิ่ม 3 คอลัมน์:
+   - `id`: Type เลือก `INT`, ติ๊กช่อง **Auto Increment**.
+   - `name`: Type เลือก `VARCHAR`, Length ใส่ `100`, ติ๊ก **Not Null**.
+   - `description`: Type เลือก `TEXT`.
+4. คลิกแท็บ **Constraints** ด้านบน > คลิกขวาเลือก **Create New Constraint** > เลือก Type เป็น `Primary Key` และติ๊กเลือกคอลัมน์ `id`.
+5. กดปุ่ม **Save (Ctrl + S)** ด้านล่างขวา > กดปุ่ม **Persist**.
+
+#### ขั้นที่ 3: สร้างตารางที่ 2 ผู้ใช้งาน (`users`)
+1. คลิกขวาที่โฟลเดอร์ **Tables** > เลือก **Create New Table** ตั้งชื่อ: `users`.
+2. เพิ่มคอลัมน์ตามโครงสร้าง:
+   - `id`: Type `VARCHAR`, Length `36`, ติ๊ก **Not Null**.
+   - `username`: Type `VARCHAR`, Length `255`, ติ๊ก **Not Null**.
+   - `password`: Type `VARCHAR`, Length `255`, ติ๊ก **Not Null**.
+   - `role`: Type `VARCHAR`, Length `20`, Default value ใส่ `'user1'`.
+   - `registered`: Type `DATETIME`, Default value ใส่ `CURRENT_TIMESTAMP`.
+   - `last_login`: Type `DATETIME`, ปล่อยว่าง NULL.
+3. คลิกแท็บ **Constraints** ด้านบน > ตั้ง `id` เป็น `Primary Key`.
+4. กดปุ่ม **Save (Ctrl + S)** > กดปุ่ม **Persist**.
+
+#### ขั้นที่ 4: สร้างตารางที่ 3 รายการงาน (`items`)
+1. คลิกขวาที่โฟลเดอร์ **Tables** > เลือก **Create New Table** ตั้งชื่อ: `items`.
+2. เพิ่มคอลัมน์ตามโครงสร้าง:
+   - `id`: Type `VARCHAR`, Length `36`, ติ๊ก **Not Null**.
+   - `user_id`: Type `VARCHAR`, Length `36`, ติ๊ก **Not Null** (เชื่อมกับผู้สร้าง).
+   - `category_id`: Type `INT` (เชื่อมกับหมวดหมู่).
+   - `title`: Type `VARCHAR`, Length `255`, ติ๊ก **Not Null** (หัวข้องาน).
+   - `description`: Type `TEXT` (รายละเอียด).
+   - `file_path`: Type `VARCHAR`, Length `255` (ที่อยู่ไฟล์แนบ).
+   - `completed`: Type `TINYINT`, Default value ใส่ `0` (สถานะงาน).
+   - `created_at`: Type `DATETIME`, Default value ใส่ `CURRENT_TIMESTAMP`.
+3. คลิกแท็บ **Constraints** ด้านบน > ตั้ง `id` เป็น `Primary Key`.
+4. กดปุ่ม **Save (Ctrl + S)** > กดปุ่ม **Persist**.
+
+#### ขั้นที่ 5: เติมข้อมูลเริ่มต้นในตาราง categories (ไม่ต้องเขียน SQL)
+1. ดับเบิลคลิกเปิดตาราง `categories` ที่แถบซ้ายมือ.
+2. คลิกที่แท็บ **Data** ด้านบน.
+3. มองที่แถบเครื่องมือด้านล่างตาราง กดปุ่มเครื่องหมายบวก **(+)** เพื่อเพิ่มแถวใหม่.
+4. ดับเบิลคลิกพิมพ์ชื่อหมวดหมู่ในคอลัมน์ `name` เช่น:
+   - แถวที่ 1: `เอกสารรายงาน`
+   - แถวที่ 2: `สื่อการเรียนรู้`
+   - แถวที่ 3: `ผลงานวิชาการ`
+5. กดปุ่ม **Save (แผ่นดิสก์สีเขียวทางขวา หรือกด Ctrl + S)** เพื่อบันทึกข้อมูลเข้าฐานข้อมูล.
+
+---
+
+### วิธีที่ 1.2: ใช้คำสั่ง SQL Script (`database/init.sql`)
+
+หากต้องการรันคำสั่ง SQL ทีเดียวจบใน 30 วินาที ให้กดคีย์ลัด `Ctrl + ]` ใน DBeaver แล้ววางคำสั่งด้านล่างนี้ จากนั้นกด `Alt + X` (Execute SQL Script):
 
 ```sql
 CREATE DATABASE IF NOT EXISTS `node-jwt` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -64,32 +134,32 @@ CREATE TABLE IF NOT EXISTS `users` (
   `username` VARCHAR(255) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
   `role` VARCHAR(20) NOT NULL DEFAULT 'user1',
-  `registered` DATETIME NOT NULL,
+  `registered` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `last_login` DATETIME NULL
 );
 
 -- 2. ตารางหมวดหมู่ (สำหรับทำตัวกรอง Filter และให้ครบ 3 ตาราง)
 CREATE TABLE IF NOT EXISTS `categories` (
-  `id` VARCHAR(36) NOT NULL PRIMARY KEY,
+  `id` INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   `name` VARCHAR(100) NOT NULL,
-  `created_at` DATETIME NOT NULL
+  `description` TEXT NULL
 );
 
-INSERT IGNORE INTO `categories` (`id`, `name`, `created_at`) VALUES
-('cat-001', 'งานทั่วไป', NOW()),
-('cat-002', 'งานด่วน', NOW()),
-('cat-003', 'เอกสารรายงาน', NOW());
+INSERT IGNORE INTO `categories` (`name`, `description`) VALUES
+('เอกสารรายงาน', 'ไฟล์เอกสารและรายงานประจำงวด'),
+('สื่อการเรียนรู้', 'เอกสารประกอบการอบรมและสไลด์'),
+('ผลงานวิชาการ', 'บทความและงานวิจัย');
 
 -- 3. ตารางรายการข้อมูล (เชื่อม Foreign Key กับ users และ categories พร้อมไฟล์แนบ)
 CREATE TABLE IF NOT EXISTS `items` (
   `id` VARCHAR(36) NOT NULL PRIMARY KEY,
   `user_id` VARCHAR(36) NOT NULL,
-  `category_id` VARCHAR(36) NULL,
+  `category_id` INT NULL,
   `title` VARCHAR(255) NOT NULL,
   `description` TEXT NULL,
   `file_path` VARCHAR(255) NULL,
   `completed` TINYINT(1) NOT NULL DEFAULT 0,
-  `created_at` DATETIME NOT NULL,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT `fk_items_user` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE,
   CONSTRAINT `fk_items_category` FOREIGN KEY (`category_id`) REFERENCES `categories`(`id`) ON DELETE SET NULL
 );
