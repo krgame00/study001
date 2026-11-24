@@ -24,16 +24,12 @@ router.get('/categories', verifyToken, async (req, res) => {
   }
 });
 
-// ดึงรายการข้อมูล (รองรับค้นหา + กรองหมวดหมู่ + แยกสิทธิ์)
+// ดึงรายการข้อมูล (ทุกคนมองเห็นข้อมูลทั้งหมดร่วมกัน รองรับค้นหา + กรองหมวดหมู่)
 router.get('/items', verifyToken, async (req, res) => {
   const { search, category_id } = req.query;
   const where = [];
   const params = [];
 
-  if (req.user.role !== 'admin') {
-    where.push('i.user_id = ?');
-    params.push(req.user.userId);
-  }
   if (search?.trim()) {
     const kw = `%${search.trim()}%`;
     where.push('(i.title LIKE ? OR i.description LIKE ?)');

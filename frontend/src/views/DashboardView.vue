@@ -186,7 +186,7 @@ function handleLogout() {
               <th>หัวข้อ</th>
               <th>รายละเอียด</th>
               <th>ไฟล์แนบ</th>
-              <th v-if="profile?.role === 'admin'">เจ้าของข้อมูล</th>
+              <th>เจ้าของข้อมูล</th>
               <th>จัดการ</th>
             </tr>
           </thead>
@@ -203,7 +203,7 @@ function handleLogout() {
                 <td><input v-model="edit.title" type="text" class="input" style="margin-bottom: 0" required /></td>
                 <td><input v-model="edit.description" type="text" class="input" style="margin-bottom: 0" /></td>
                 <td><input type="file" @change="(e) => (edit.file = e.target.files[0] || null)" /></td>
-                <td v-if="profile?.role === 'admin'">{{ item.owner_name }}</td>
+                <td>{{ item.owner_name || '-' }}</td>
                 <td>
                   <button class="btn btn-green" style="margin-right: 4px" @click="handleUpdate">บันทึก</button>
                   <button class="btn btn-gray" @click="edit = null">ยกเลิก</button>
@@ -219,10 +219,13 @@ function handleLogout() {
                   <a v-if="item.file_path" :href="`http://localhost:3000${item.file_path}`" target="_blank">เปิดไฟล์</a>
                   <span v-else>-</span>
                 </td>
-                <td v-if="profile?.role === 'admin'">{{ item.owner_name }}</td>
+                <td>{{ item.owner_name || '-' }}</td>
                 <td>
-                  <button class="btn btn-gray" style="margin-right: 4px" @click="startEdit(item)">แก้ไข</button>
-                  <button v-if="profile?.role !== 'user2'" class="btn btn-red" @click="handleDelete(item)">ลบ</button>
+                  <template v-if="profile?.role === 'admin' || item.user_id === profile?.id">
+                    <button class="btn btn-gray" style="margin-right: 4px" @click="startEdit(item)">แก้ไข</button>
+                    <button v-if="profile?.role !== 'user2'" class="btn btn-red" @click="handleDelete(item)">ลบ</button>
+                  </template>
+                  <span v-else style="color: #888; font-size: 13px">ดูได้อย่างเดียว</span>
                 </td>
               </template>
             </tr>
