@@ -40,4 +40,4 @@
 ### DBeaver GUI Guide added to GUIDE.md
 - **Status**: `DOCUMENTED & VERIFIED`
 - **Details**: Added Section 1.1 with step-by-step GUI instructions in DBeaver (Create DB, create 3 tables, setup constraints, insert seed data, save & persist). Kept Section 1.2 for quick SQL script execution. Aligned `init.sql` schema.
-- **Update**: Fully detailed each column's creation fields (Column name, Data type, Length, Not Null checkbox, Auto Increment, Default value, and OK button) for `categories`, `users`, and `items` so no steps are missing.
+- **Update**: Unified and streamlined Step 2 (`categories`), Step 3 (`users`), and Step 4 (`items`) into a consistent, readable single-line format per column. Explicitly noted `Not Null` and `Auto Increment` on `categories.id`.

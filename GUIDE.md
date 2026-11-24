@@ -73,35 +73,13 @@ project-root/
 3. เลือก Character Set: **`utf8mb4`** แล้วกด **OK**.
 
 #### ขั้นที่ 2: สร้างตารางที่ 1 หมวดหมู่ (`categories`)
-1. ดับเบิลคลิกเปิดฐานข้อมูล `node-jwt` > คลิกขวาที่โฟลเดอร์ **Tables** > เลือก **Create New Table**.
-2. ในช่อง **Table Name** ด้านบนพิมพ์ชื่อ: `categories`.
-3. สร้างคอลัมน์ทีละตัว โดยคลิกขวาในพื้นที่ว่างของแท็บ Columns > เลือก **Create New Column** (จะมีหน้าต่างป๊อปอัปเด้งขึ้นมา):
-   - **คอลัมน์ที่ 1 (`id`)**:
-     - ช่อง **Column name**: พิมพ์ `id`
-     - ช่อง **Data type**: พิมพ์หรือเลือก `INT`
-     - ช่อง **Not Null**: ติ๊กเครื่องหมายถูก
-     - ช่อง **Auto Increment**: ติ๊กเครื่องหมายถูก
-     - กดปุ่ม **OK**
-   - **คอลัมน์ที่ 2 (`name`)**:
-     - คลิกขวาเลือก **Create New Column** อีกครั้ง
-     - ช่อง **Column name**: พิมพ์ `name`
-     - ช่อง **Data type**: พิมพ์หรือเลือก `VARCHAR`
-     - ช่อง **Length**: พิมพ์ `100`
-     - ช่อง **Not Null**: ติ๊กเครื่องหมายถูก
-     - กดปุ่ม **OK**
-   - **คอลัมน์ที่ 3 (`description`)**:
-     - คลิกขวาเลือก **Create New Column** อีกครั้ง
-     - ช่อง **Column name**: พิมพ์ `description` (สะกดด้วยตัว i)
-     - ช่อง **Data type**: พิมพ์หรือเลือก `TEXT`
-     - ช่อง **Length**: ปล่อยว่างไม่ต้องใส่
-     - ช่อง **Not Null**: ไม่ต้องติ๊ก (ปล่อยให้เป็น NULL ได้)
-     - กดปุ่ม **OK**
-4. **กำหนด Primary Key**:
-   - คลิกขวาที่แถวคอลัมน์ `id` ในตาราง > เลือก **Create New Constraint**
-   - หน้าต่างจะขึ้นมา ให้เลือก Type เป็น **Primary Key** แล้วกดปุ่ม **OK**
-5. **บันทึกลงฐานข้อมูลจริง**:
-   - กดปุ่ม **Save (หรือกดคีย์ลัด Ctrl + S)** ที่มุมล่างขวาของหน้าต่าง
-   - จะมีหน้าต่าง Preview Changes แสดงโค้ด SQL เด้งขึ้นมา ให้กดปุ่ม **Persist**
+1. ดับเบิลคลิกเปิดฐานข้อมูล `node-jwt` > คลิกขวาที่โฟลเดอร์ **Tables** > เลือก **Create New Table** ตั้งชื่อ Table Name: `categories`.
+2. คลิกขวาที่แท็บ Columns เลือก **Create New Column** เพิ่มทีละตัว:
+   - **`id`**: Name ใส่ `id`, Type `INT`, ติ๊ก **Not Null**, ติ๊ก **Auto Increment**, กด **OK**
+   - **`name`**: Name ใส่ `name`, Type `VARCHAR`, Length `100`, ติ๊ก **Not Null**, กด **OK**
+   - **`description`**: Name ใส่ `description`, Type `TEXT`, ไม่ต้องติ๊ก Not Null (ปล่อย NULL), กด **OK**
+3. **กำหนด Primary Key**: คลิกขวาที่คอลัมน์ `id` > เลือก **Create New Constraint** > เลือก **Primary Key** > กด **OK**
+4. กดปุ่ม **Save (Ctrl + S)** > กดปุ่ม **Persist**
 
 #### ขั้นที่ 3: สร้างตารางที่ 2 ผู้ใช้งาน (`users`)
 1. คลิกขวาที่โฟลเดอร์ **Tables** > เลือก **Create New Table** ตั้งชื่อ Table Name: `users`.
