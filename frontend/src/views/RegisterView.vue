@@ -46,9 +46,9 @@ async function handleRegister() {
 
         <label>ระดับผู้ใช้งาน (Role)</label>
         <select v-model="form.role" class="input">
-          <option value="user1">ผู้ใช้งานระดับ 1 (User 1)</option>
-          <option value="user2">ผู้ใช้งานระดับ 2 (User 2)</option>
-          <option value="admin">ผู้ดูแลระบบ (Admin)</option>
+          <option value="user1">เจ้าหน้าที่ปฏิบัติการ (Officer / User 1)</option>
+          <option value="user2">พนักงานทั่วไป (Staff / User 2)</option>
+          <option value="admin">ผู้ดูแลระบบ (Administrator / Admin)</option>
         </select>
 
         <div v-if="errorMessage" class="alert">{{ errorMessage }}</div>

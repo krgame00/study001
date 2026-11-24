@@ -7,6 +7,12 @@ import { api } from '../api'
 const authStore = useAuthStore()
 const router = useRouter()
 
+const roleLabels = {
+  admin: 'ผู้ดูแลระบบ (Admin)',
+  user1: 'เจ้าหน้าที่ปฏิบัติการ (Officer)',
+  user2: 'พนักงานทั่วไป (Staff)'
+}
+
 const profile = ref(null)
 const categories = ref([])
 const items = ref([])
@@ -125,7 +131,7 @@ function handleLogout() {
         <h2 style="margin: 0 0 4px 0">ระบบจัดการข้อมูล (Dashboard)</h2>
         <div v-if="profile" style="font-size: 14px">
           ผู้ใช้: <strong>{{ profile.username }}</strong> |
-          สิทธิ์: <span class="badge">{{ profile.role.toUpperCase() }}</span>
+          สิทธิ์: <span class="badge">{{ roleLabels[profile.role] || profile.role.toUpperCase() }}</span>
         </div>
       </div>
       <button class="btn btn-red" @click="handleLogout">ออกจากระบบ (Logout)</button>

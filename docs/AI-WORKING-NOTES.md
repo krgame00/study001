@@ -28,3 +28,11 @@
      - `user1`: Edit & Delete on own rows; "ดูได้อย่างเดียว" on others' rows.
      - `user2`: Edit only on own rows (cannot delete); "ดูได้อย่างเดียว" on others' rows.
   4. Backend tests passed (4/4).
+
+### Role Naming: Corporate/Office Theme (Option 1)
+- **Status**: `VERIFIED WORKING`
+- **Roles Configured**:
+  - `admin`: ผู้ดูแลระบบ (Administrator / Admin)
+  - `user1`: เจ้าหน้าที่ปฏิบัติการ (Officer / User 1)
+  - `user2`: พนักงานทั่วไป (Staff / User 2)
+- **UI Updated**: `RegisterView.vue` and `DashboardView.vue` updated across both projects. Frontend builds with 0 errors.
